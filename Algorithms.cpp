@@ -3,8 +3,7 @@
 
 namespace ariel
 {
-    bool Algorithms::isConnected(Graph g)
-    {
+    bool Algorithms::isConnected(const Graph &g){
         std::vector<std::vector<int>> adjacencyMatrix = g.getAdjacencyMatrix();
         unsigned int vertexCount = adjacencyMatrix.size();
         bool visited[vertexCount];
@@ -26,7 +25,7 @@ namespace ariel
 
         return true;
     }
-    bool Algorithms::relaxVert(std::vector<std::vector<int>> adjacencyMatrix, int previous[], int weights[], unsigned int u, unsigned int v)
+    bool Algorithms::relaxVert(std::vector<std::vector<int>> &adjacencyMatrix, int previous[], int weights[], const unsigned int u, const unsigned int v)
     {
         if (weights[v] > weights[u] + adjacencyMatrix[u][v] && weights[u] != INT_MAX)
         {
@@ -36,7 +35,7 @@ namespace ariel
         }
         return false;
     }
-    std::string Algorithms::shortestPath(Graph g, int a, int b)
+    std::string Algorithms::shortestPath(const Graph &g, const int a, const int b)
     {
         std::string result;
         std::vector<std::vector<int>> adjacencyMatrix = g.getAdjacencyMatrix();
@@ -80,7 +79,7 @@ namespace ariel
         }
         return result;
     }
-    bool Algorithms::visitDFS(std::vector<std::vector<int>> adjacencyMatrix, unsigned int vertexCount, int previous[], int color[], unsigned int u, unsigned int parent)
+    bool Algorithms::visitDFS(std::vector<std::vector<int>> &adjacencyMatrix, const unsigned int vertexCount, int previous[], int color[], const unsigned int u, const unsigned int parent)
     {
         color[u] = GRAY;
         for (unsigned int v = 0; v < vertexCount; v++)
@@ -105,7 +104,7 @@ namespace ariel
         color[u] = BLACK;
         return false;
     }
-    bool Algorithms::isContainsCycle(Graph g)
+    bool Algorithms::isContainsCycle(const Graph &g)
     {
         std::string result;
         std::vector<std::vector<int>> adjacencyMatrix = g.getAdjacencyMatrix();
@@ -136,7 +135,7 @@ namespace ariel
         }
         return false;
     }
-    bool Algorithms::colorDFS(std::vector<std::vector<int>> adjacencyMatrix, unsigned int vertexCount, int previous[], int color[], unsigned int u, unsigned int parent)
+    bool Algorithms::colorDFS(std::vector<std::vector<int>> &adjacencyMatrix, const unsigned int vertexCount, int previous[], int color[], const unsigned int u, const unsigned int parent)
     {
         for (unsigned int v = 0; v < vertexCount; v++)
         {
@@ -169,7 +168,7 @@ namespace ariel
         }
         return true;
     }
-    std::string Algorithms::isBipartite(Graph g)
+    std::string Algorithms::isBipartite(const Graph &g)
     {
         bool moreThanOne = false;
         std::string result;
@@ -217,7 +216,7 @@ namespace ariel
         result += "}";
         return result;
     }
-    bool Algorithms::negativeCycle(Graph g)
+    bool Algorithms::negativeCycle(const Graph &g)
     {
         try
         {

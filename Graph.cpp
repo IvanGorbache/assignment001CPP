@@ -1,16 +1,19 @@
 #include "Graph.hpp"
-namespace ariel{
-    Graph::Graph(){
+
+    ariel::Graph::Graph(){
+        //Creates an empty 2D vector
         this->adjacencyMatrix;
     }
-    void Graph::loadGraph(std::vector<std::vector<int>> g){
+    void ariel::Graph::loadGraph(const std::vector<std::vector<int>> &g){
+        //Checks if the number of rows matches the number of columns in the matrix.
         if(g.size()!=g[0].size())
         {
             throw std::invalid_argument("The number of rows and columbs are differnet!");
         }
+        //Loards the new matrix
         this->adjacencyMatrix = g;
     }
-    void Graph::printGraph(){
+    void ariel::Graph::printGraph() const{
         int count = 0;
 
         for(std::vector<int> row : this->adjacencyMatrix)
@@ -20,10 +23,8 @@ namespace ariel{
                 count += weight?1:0;
             }
         }
-        std::cout<<"Graph with "<<this->vertexCount<<" vertices and "<<count<<" edges."<<std::endl;
+        std::cout<<"Graph with "<<this->adjacencyMatrix.size()<<" vertices and "<<count<<" edges."<<std::endl;
     }
-    std::vector<std::vector<int>> Graph::getAdjacencyMatrix()
-    {
+    std::vector<std::vector<int>> ariel::Graph::getAdjacencyMatrix() const{
         return this->adjacencyMatrix;
     }
-};

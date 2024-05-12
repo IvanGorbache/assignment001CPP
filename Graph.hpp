@@ -6,14 +6,10 @@ namespace ariel{
     class Graph{
         private:
             std::vector<std::vector<int>> adjacencyMatrix;
-            int vertexCount;
         public:
             Graph();
-            void loadGraph(std::vector<std::vector<int>> g);
-            void printGraph();
-
-            std::vector<std::vector<int>> getAdjacencyMatrix();
-            int getVertexCount();
-
+            void loadGraph(const std::vector<std::vector<int>> &g);
+            void printGraph() const;
+            std::vector<std::vector<int>> getAdjacencyMatrix() const;
     };
 };

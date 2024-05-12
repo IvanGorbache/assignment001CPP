@@ -10,10 +10,10 @@ OBJECTS=$(subst .cpp,.o,$(SOURCES))
 run: demo
 	./$^
 
-demo: Demo.o $(OBJECTS)
+demo: Demo.o $(filter-out TestCounter.o Test.o,$(OBJECTS))
 	$(CXX) $(CXXFLAGS) $^ -o demo
 
-test: TestCounter.o Test.o $(OBJECTS)
+test: TestCounter.o Test.o $(filter-out Demo.o,$(OBJECTS))
 	$(CXX) $(CXXFLAGS) $^ -o test
 
 tidy:
@@ -21,6 +21,7 @@ tidy:
 
 valgrind: demo 
 	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./demo 2>&1 | { egrep "lost| at " || true; }
+	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./test 2>&1 | { egrep "lost| at " || true; }
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) --compile $< -o $@
