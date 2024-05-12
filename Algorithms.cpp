@@ -181,17 +181,20 @@ namespace ariel
     {
         std::string result;
         std::vector<std::vector<int>> adjacencyMatrix = g.getAdjacencyMatrix();
-        unsigned int vertexCount = adjacencyMatrix.size();
-        unsigned int previous[vertexCount], color[vertexCount], current = 0;
+        unsigned int vertexCount = adjacencyMatrix.size(), previous[vertexCount], color[vertexCount], current = 0;
         std::fill_n(previous, vertexCount, -1);
         std::fill_n(color, vertexCount, WHITE);
+
+        //performing the DFS algorithm on the graph
         for (unsigned int i = 0; i < vertexCount; i++)
         {
+            //visiting unvisited vetecies
             if (color[i] == WHITE)
             {
+                //checking if one of the edges has been marked as a back edge during the visit
                 if (visitDFS(adjacencyMatrix, vertexCount, previous, color, i, i))
                 {
-
+                    //printing the cycle
                     result = std::to_string(i);
                     current = i;
                     do
@@ -214,27 +217,26 @@ namespace ariel
         {
             if (adjacencyMatrix[u][v])
             {
+                //If the colors match, we don't have a partition
                 if (color[v] == color[u] && u != v)
                 {
                     return false;
                 }
+                //If the vertex hasn't been colored, we give it the opposite color of the current vertex
                 if (color[v] == WHITE && previous[u] != v)
                 {
                     if (color[u] == GRAY)
                     {
                         color[v] = BLACK;
-                        if (!colorDFS(adjacencyMatrix, vertexCount, previous, color, v, u))
-                        {
-                            return false;
-                        }
                     }
                     else
                     {
                         color[v] = GRAY;
-                        if (!colorDFS(adjacencyMatrix, vertexCount, previous, color, v, u))
-                        {
-                            return false;
-                        }
+                    }
+                    //propagating the result up the recursive calls
+                    if (!colorDFS(adjacencyMatrix, vertexCount, previous, color, v, u))
+                    {
+                        return false;
                     }
                 }
             }
@@ -243,23 +245,31 @@ namespace ariel
     }
     std::string Algorithms::isBipartite(const Graph &g)
     {
+        //a boolean used to check if commas should be added
         bool moreThanOne = false;
         std::string result;
         std::vector<std::vector<int>> adjacencyMatrix = g.getAdjacencyMatrix();
-        unsigned int vertexCount = adjacencyMatrix.size();
-        unsigned int previous[vertexCount], color[vertexCount], current = 0;
+        unsigned int vertexCount = adjacencyMatrix.size(), previous[vertexCount], color[vertexCount], current = 0;
         std::fill_n(previous, vertexCount, -1);
         std::fill_n(color, vertexCount, WHITE);
-        color[0] = GRAY;
+
+        //paritioning the graph by coloring it using a modified DFS
+        
         for (unsigned int i = 0; i < vertexCount; i++)
         {
-            if (!colorDFS(adjacencyMatrix, vertexCount, previous, color, i, i))
+            //in case we run into disjointed graphs
+            if(color[i]==WHITE)
             {
-                return "0";
+                color[i] = GRAY;
+                if (!colorDFS(adjacencyMatrix, vertexCount, previous, color, i, i))
+                {
+                    return "0";
+                }
             }
         }
 
-
+        //constructing the string
+        //constructing the first group
         result = "The graph is bipartite: A={";
         for (int i = 0; i < vertexCount; i++)
         {
@@ -274,6 +284,8 @@ namespace ariel
                 moreThanOne = true;
             }
         }
+
+        //constructing the second group
         moreThanOne = false;
         result += "}, B={";
         for (int i = 0; i < vertexCount; i++)

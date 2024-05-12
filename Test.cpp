@@ -193,3 +193,67 @@ TEST_CASE("Test negativeCycle on disjointed graphs")
     g.loadGraph(graph);
     CHECK(ariel::Algorithms::negativeCycle(g)==true);
 }
+
+TEST_CASE("Test isBipartite on cycles")
+{
+    ariel::Graph g;
+    vector<vector<int>> graph = {
+        {0, 0, 1, 0, 0, 0, 0}, 
+        {0, 0, 0, 0, 0, 0, 1}, 
+        {0, 0, 0, 1, 0, 0, 0}, 
+        {0, 0, 0, 0, 1, 0, 0}, 
+        {0, 1, 0, 0, 0, 0, 0}, 
+        {1, 0, 0, 0, 0, 0, 0}, 
+        {0, 0, 0, 0, 0, 1, 0}};
+    g.loadGraph(graph);
+    CHECK(ariel::Algorithms::isBipartite(g) == "0");
+
+    vector<vector<int>> graph2 = {
+        {0, 1, 0, 0, 0, 0}, 
+        {0, 0, 1, 0, 0, 0}, 
+        {0, 0, 0, 1, 0, 0}, 
+        {0, 0, 0, 0, 1, 0}, 
+        {0, 0, 0, 0, 0, 1}, 
+        {1, 0, 0, 0, 0, 0}};
+    g.loadGraph(graph2);
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 4}, B={1, 3, 5}");
+}
+
+
+TEST_CASE("Test shortestPath on disjointed graphs")
+{
+    ariel::Graph g;
+    vector<vector<int>> graph = {
+        {0, 5, 0, 0, 0, 0}, 
+        {0, 0, 5, 42, 0, 0}, 
+        {0, 0, 0, 5, 0, 0}, 
+        {0, 0, 7, 0, 0, 5}, 
+        {0, 0, 0, 0, 0, 0}, 
+        {0, 0, 3, 0, 0, 0}};
+    g.loadGraph(graph);
+    CHECK(ariel::Algorithms::shortestPath(g, 0, 4) == "-1");
+}
+
+TEST_CASE("Test isBipartite on disjointed graphs")
+{
+    ariel::Graph g;
+    vector<vector<int>> graph = {
+        {0, 7, 0, 0, 0, 0}, 
+        {7, 0, 7, 0, 0, 0}, 
+        {0, 7, 0, 0, 0, 0}, 
+        {0, 0, 0, 0, 5, 11}, 
+        {0, 0, 0, 5, 0, 1}, 
+        {0, 0, 0, 11, 1, 0}};
+    g.loadGraph(graph);
+    CHECK(ariel::Algorithms::isBipartite(g) == "0");
+
+    vector<vector<int>> graph2 = {
+        {0, 7, 0, 0, 0, 0}, 
+        {7, 0, 7, 0, 0, 0}, 
+        {0, 7, 0, 0, 0, 0}, 
+        {0, 0, 0, 0, 5, 0}, 
+        {0, 0, 0, 5, 0, 1}, 
+        {0, 0, 0, 0, 1, 0}};
+    g.loadGraph(graph2);
+    CHECK(ariel::Algorithms::isBipartite(g) == "The graph is bipartite: A={0, 2, 3, 5}, B={1, 4}");
+}
