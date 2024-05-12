@@ -57,10 +57,10 @@ namespace ariel {
 
 
         /*
-        Input: An adjacency matrix representing a graph, the number of vertecies in the graph, an array where the index contains the previous vertex of the vertex with corresponding index, an array that represents the color of the vertecies, the index of the next vertex to be checked, the index of the parent vertex.
+        Input: An adjacency matrix representing a graph, the number of vertecies in the graph, an array that represents the color of the vertecies, the index of the next vertex to be checked, the index of the parent vertex.
         Output: An array of the colors of the vertecies to determin if all vertecies have been visited
         */
-        static void visitBFS(std::vector<std::vector<int>> &adjacencyMatrix, const unsigned int vertexCount, unsigned int previous[], unsigned int color[], const unsigned int u, const unsigned int parent);
+        static void visitBFS(std::vector<std::vector<int>> &adjacencyMatrix, const unsigned int vertexCount, unsigned int color[], const unsigned int u, const unsigned int parent);
 
         /*
         Input: An adjacency matrix representing a graph, an array where the index contains the previous vertex of the vertex with corresponding index, an array of the weight of each of the vertecies in the graph, the starting point of the edge, the ending point of the edge

@@ -14,6 +14,12 @@ TEST_CASE("Test isConnected")
     g.loadGraph(graph);
     CHECK(ariel::Algorithms::isConnected(g) == true);
 
+    vector<vector<int>> graph0 = {
+        {0, 0},
+        {1, 0}};
+    g.loadGraph(graph0);
+    CHECK(ariel::Algorithms::isConnected(g) == true);
+
     vector<vector<int>> graph2 = {
         {0, 0, 1, 0, 1},
         {0, 0, 1, 0, 0},
@@ -169,5 +175,21 @@ TEST_CASE("Test shortest path with graphs that contain negative cycles")
         {0, 0, 5, 0, 0}};
     g.loadGraph(graph3);
     CHECK(ariel::Algorithms::shortestPath(g, 4, 1) == "-1");
+}
 
+TEST_CASE("Test negativeCycle on disjointed graphs")
+{
+    ariel::Graph g;
+    vector<vector<int>> graph = {
+        {0, 0, 5, 0, 0, 0, 0, 0}, 
+        {0, 0, 0, 0, 0, 0, 0, 0}, 
+        {0, 3, 0, 7, 0, 0, 0, 0}, 
+        {0, 0, 0, 0, 0, 0, 0, 0}, 
+        {1, 0, 0, 0, 0, 0, 0, 0}, 
+        {0, 0, 0, 0, 0, 0, -1, 0}, 
+        {0, 0, 0, 0, 0, 0, 0, -1}, 
+        {0, 0, 0, 0, 0, -4, 0, 0}}; 
+
+    g.loadGraph(graph);
+    CHECK(ariel::Algorithms::negativeCycle(g)==true);
 }
